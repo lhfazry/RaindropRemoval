@@ -2,7 +2,7 @@
 
 CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --attention_resolutions 32,16,8 \
-    --class_cond True \
+    --class_cond False \
     --diffusion_steps 1000 \
     --dropout 0.1 \
     --image_size 64 \
@@ -16,6 +16,5 @@ CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --use_fp16 True \
     --use_scale_shift_norm True \
     --batch_size $BATCH_SIZE \
-    --num_samples 10 \
     --timestep_respacing 250 \
     --data_dir datasets/LEVIR/A
