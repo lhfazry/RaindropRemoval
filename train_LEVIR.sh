@@ -18,8 +18,5 @@ CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --batch_size $BATCH_SIZE \
     --num_samples 10 \
     --timestep_respacing 250 \
-    --classifier_scale 1.0 \
-    --classifier_path models/64x64_classifier.pt \
-    --classifier_depth 4 \
     --model_path models/64x64_diffusion.pt 
     --data_dir datasets/LEVIR/A
