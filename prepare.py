@@ -4,7 +4,7 @@ import gdown
 import zipfile
 import os
 
-Path("logs/LEVIR").mkdir(parents=True, exist_ok=True)
+#Path("logs/LEVIR").mkdir(parents=True, exist_ok=True)
 Path("datasets/LEVIR").mkdir(parents=True, exist_ok=True)
 Path("models").mkdir(exist_ok=True)
 
