@@ -1,3 +1,4 @@
+#!/opt/conda/bin/python
 from pathlib import Path
 import gdown
 import zipfile
