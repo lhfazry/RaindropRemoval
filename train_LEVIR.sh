@@ -1,7 +1,7 @@
 #!/bin/bash
 export OPENAI_LOGDIR=logs/LEVIR
 
-CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
+CUDA_LAUNCH_BLOCKING=1 CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --attention_resolutions 32,16,8 \
     --class_cond False \
     --diffusion_steps 1000 \
