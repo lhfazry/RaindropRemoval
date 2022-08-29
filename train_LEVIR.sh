@@ -1,4 +1,5 @@
 #!/bin/bash
+export OPENAI_LOGDIR=logs\LEVIR
 
 CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --attention_resolutions 32,16,8 \
