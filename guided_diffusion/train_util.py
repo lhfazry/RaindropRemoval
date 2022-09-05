@@ -26,7 +26,7 @@ class TrainLoop:
         *,
         model,
         diffusion,
-        noise,
+        #noise,
         data,
         batch_size,
         microbatch,
@@ -191,10 +191,10 @@ class TrainLoop:
             last_batch = (i + self.microbatch) >= batch.shape[0]
             t, weights = self.schedule_sampler.sample(micro.shape[0], dist_util.dev())
 
-            noise = None
+            #noise = None
 
-            if self.noise == "simplex":
-                noise = ""
+            #if self.noise == "simplex":
+            #    noise = ""
 
             compute_losses = functools.partial(
                 self.diffusion.training_losses,
@@ -202,7 +202,7 @@ class TrainLoop:
                 micro,
                 t,
                 model_kwargs=micro_cond,
-                noise=noise
+                #noise=noise
             )
 
             if last_batch or not self.use_ddp:
