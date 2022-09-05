@@ -12,6 +12,7 @@ from . import dist_util, logger
 from .fp16_util import MixedPrecisionTrainer
 from .nn import update_ema
 from .resample import LossAwareSampler, UniformSampler
+from script_util import generate_simplex_noise
 
 # For ImageNet experiments, this was a good default value.
 # We found that the lg_loss_scale quickly climbed to
@@ -25,6 +26,7 @@ class TrainLoop:
         *,
         model,
         diffusion,
+        noise,
         data,
         batch_size,
         microbatch,
@@ -41,6 +43,7 @@ class TrainLoop:
     ):
         self.model = model
         self.diffusion = diffusion
+        self.noise = noise
         self.data = data
         self.batch_size = batch_size
         self.microbatch = microbatch if microbatch > 0 else batch_size
@@ -188,12 +191,18 @@ class TrainLoop:
             last_batch = (i + self.microbatch) >= batch.shape[0]
             t, weights = self.schedule_sampler.sample(micro.shape[0], dist_util.dev())
 
+            noise = None
+
+            if self.noise == "simplex":
+                noise = ""
+
             compute_losses = functools.partial(
                 self.diffusion.training_losses,
                 self.ddp_model,
                 micro,
                 t,
                 model_kwargs=micro_cond,
+                noise=noise
             )
 
             if last_batch or not self.use_ddp:

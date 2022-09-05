@@ -41,6 +41,7 @@ def main():
     TrainLoop(
         model=model,
         diffusion=diffusion,
+        noise=args.noise,
         data=data,
         batch_size=args.batch_size,
         microbatch=args.microbatch,
