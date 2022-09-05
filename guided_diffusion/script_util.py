@@ -20,7 +20,7 @@ def diffusion_defaults():
         learn_sigma=False,
         diffusion_steps=1000,
         noise_schedule="linear",
-        noise="gaussian",
+        #noise="gaussian",
         timestep_respacing="",
         use_kl=False,
         predict_xstart=False,
