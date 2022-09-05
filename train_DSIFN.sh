@@ -1,5 +1,5 @@
 #!/bin/bash
-export OPENAI_LOGDIR=logs/LEVIR
+export OPENAI_LOGDIR=logs/DSIFN
 
 CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --attention_resolutions 32,16,8 \
@@ -18,4 +18,4 @@ CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --use_scale_shift_norm True \
     --batch_size $BATCH_SIZE \
     --timestep_respacing 250 \
-    --data_dir datasets/LEVIR/A
+    --data_dir datasets/DSIFN/A

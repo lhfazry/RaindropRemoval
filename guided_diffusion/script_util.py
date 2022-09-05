@@ -7,7 +7,7 @@ from . import gaussian_diffusion as gd
 from .respace import SpacedDiffusion, space_timesteps
 from .unet import SuperResModel, UNetModel, EncoderUNetModel
 
-from simplex import Simplex_CLASS
+from .simplex import Simplex_CLASS
 
 NUM_CLASSES = 1000
 

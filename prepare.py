@@ -25,6 +25,7 @@ if len(os.listdir("datasets/DSIFN")) == 0:
 
     #extract datasets
     with zipfile.ZipFile('datasets/DSIFN.zip', 'r') as zip_ref:
-        zip_ref.extractall('datasets/DSIFN')
+        zip_ref.extractall('datasets/')
+        os.rename('DSIFN-CD-256', 'DSIFN')
         os.remove('datasets/DSIFN.zip')
 
