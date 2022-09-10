@@ -18,4 +18,5 @@ CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --use_scale_shift_norm True \
     --batch_size $BATCH_SIZE \
     --timestep_respacing 250 \
+    --resume_checkpoint $RESUME_CHECKPOINT \
     --data_dir datasets/RainDrop/train/gt
