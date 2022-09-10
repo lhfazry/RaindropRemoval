@@ -6,7 +6,7 @@ CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --class_cond False \
     --diffusion_steps 1000 \
     --dropout 0.1 \
-    --image_size 256 \
+    --image_size 128 \
     --learn_sigma True \
     --noise_schedule cosine \
     --num_channels 192 \
