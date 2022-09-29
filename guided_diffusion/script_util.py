@@ -2,6 +2,7 @@ import argparse
 import inspect
 import random
 import torch
+import numpy as np
 
 
 from . import gaussian_diffusion as gd
@@ -502,7 +503,7 @@ def generate_simplex_noise(
     return noise
 
 def tensors_to_images(tensor):
-    images = ((tensor + 1) * 127.5).clamp(0, 255).to(torch.uint8)
+    images = ((tensor + 1) * 127.5).clamp(0, 255).to(np.uint8)
     images = images.permute(0, 2, 3, 1)
     images = images.contiguous()
     return images
