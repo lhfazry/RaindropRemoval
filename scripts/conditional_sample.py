@@ -109,7 +109,7 @@ def main():
             break
     
     #np.savez(os.path.join(logger.get_dir(), f"noises.npz"), np.concatenate(all_noises, axis=0))
-    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(th.cat(all_noises, dim=0)).cpu().numpy())
+    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(th.stack(all_noises)).cpu().numpy())
 
     arr = np.concatenate(all_images, axis=0)
     arr = arr[: args.num_samples]
