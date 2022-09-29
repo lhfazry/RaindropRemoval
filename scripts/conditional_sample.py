@@ -83,7 +83,7 @@ def main():
         sample = sample_fn(
             model,
             (args.batch_size, 3, args.image_size, args.image_size),
-            noise=x_t,
+            #noise=x_t,
             clip_denoised=args.clip_denoised,
             progress=True,
             model_kwargs=model_kwargs,
