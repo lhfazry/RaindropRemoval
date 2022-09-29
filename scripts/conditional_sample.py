@@ -56,7 +56,7 @@ def main():
     all_images = []
     all_labels = []
     #while len(all_images) * args.batch_size < args.num_samples:
-    for step, images in enumerate(data):
+    for step, (images, cond) in enumerate(data):
         model_kwargs = {}
         if args.class_cond:
             classes = th.randint(
