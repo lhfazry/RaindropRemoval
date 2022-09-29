@@ -73,7 +73,7 @@ def main():
 
         images = images.to(dist_util.dev())
         noise = th.randn_like(images)
-        t, weights = schedule_sampler.sample(noise.shape[0], dist_util.dev())
+        t, _ = schedule_sampler.sample(noise.shape[0], dist_util.dev())
         x_t = diffusion.q_sample(images, t, noise=noise)
 
         sample = sample_fn(
@@ -81,6 +81,7 @@ def main():
             (args.batch_size, 3, args.image_size, args.image_size),
             noise=x_t,
             clip_denoised=args.clip_denoised,
+            progress=True,
             model_kwargs=model_kwargs,
         )
         sample = ((sample + 1) * 127.5).clamp(0, 255).to(th.uint8)
