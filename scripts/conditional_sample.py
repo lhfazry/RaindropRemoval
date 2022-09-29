@@ -28,17 +28,6 @@ def main():
     dist_util.setup_dist()
     logger.configure()
 
-    schedule_sampler = create_named_schedule_sampler(args.schedule_sampler, diffusion)
-
-    logger.log("creating data loader...")
-    data = load_data(
-        data_dir=args.data_dir,
-        batch_size=args.batch_size,
-        image_size=args.image_size,
-        class_cond=args.class_cond,
-        random_flip=False
-    )
-
     logger.log("creating model and diffusion...")
     model, diffusion = create_model_and_diffusion(
         **args_to_dict(args, model_and_diffusion_defaults().keys())
@@ -51,6 +40,17 @@ def main():
         model.convert_to_fp16()
     model.eval()
 
+    schedule_sampler = create_named_schedule_sampler(args.schedule_sampler, diffusion)
+
+    logger.log("creating data loader...")
+    data = load_data(
+        data_dir=args.data_dir,
+        batch_size=args.batch_size,
+        image_size=args.image_size,
+        class_cond=args.class_cond,
+        random_flip=False
+    )
+    
     logger.log("sampling...")
 
     #for step, images in enumerate(data):
