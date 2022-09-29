@@ -50,7 +50,7 @@ def main():
         class_cond=args.class_cond,
         random_flip=False
     )
-    
+
     logger.log("sampling...")
 
     #for step, images in enumerate(data):
@@ -70,6 +70,7 @@ def main():
             diffusion.p_sample_loop if not args.use_ddim else diffusion.ddim_sample_loop
         )
 
+        images = images.to(dist_util.dev())
         noise = th.randn_like(images)
         t, weights = schedule_sampler.sample(noise.shape[0], dist_util.dev())
         x_t = diffusion.q_sample(images, t, noise=noise)
