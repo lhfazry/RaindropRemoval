@@ -61,6 +61,7 @@ def main():
 
     all_images = []
     all_labels = []
+    all_noises = []
     #while len(all_images) * args.batch_size < args.num_samples:
     for step, (images, cond) in enumerate(data):
         model_kwargs = {}
@@ -75,7 +76,8 @@ def main():
 
         images = images.to(dist_util.dev())
         noise = th.randn_like(images)
-        t, _ = schedule_sampler.sample(noise.shape[0], dist_util.dev())
+        #t, _ = schedule_sampler.sample(noise.shape[0], dist_util.dev())
+        t = args.from_noise_step * th.ones(noise.shape[0]).long().to(dist_util.dev())
         x_t = diffusion.q_sample(images, t, noise=noise)
 
         sample = sample_fn(
@@ -93,6 +95,8 @@ def main():
         gathered_samples = [th.zeros_like(sample) for _ in range(dist.get_world_size())]
         dist.all_gather(gathered_samples, sample)  # gather not supported with NCCL
         all_images.extend([sample.cpu().numpy() for sample in gathered_samples])
+        all_noises.extend([item.cpu().numpy() for item in x_t])
+
         if args.class_cond:
             gathered_labels = [
                 th.zeros_like(classes) for _ in range(dist.get_world_size())
@@ -104,8 +108,7 @@ def main():
         if len(all_images) * args.batch_size >= args.num_samples:
             break
 
-    np.savez(os.path.join(logger.get_dir(), f"origin.npz"), script_util.tensors_to_images(images).cpu().numpy())
-    np.savez(os.path.join(logger.get_dir(), f"noise.npz"), script_util.tensors_to_images(x_t).cpu().numpy())
+    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(all_noises))
 
     arr = np.concatenate(all_images, axis=0)
     arr = arr[: args.num_samples]
