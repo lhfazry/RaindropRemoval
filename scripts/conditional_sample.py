@@ -10,6 +10,7 @@ import numpy as np
 import torch as th
 import torch.distributed as dist
 from guided_diffusion.image_datasets import load_data
+from guided_diffusion.resample import create_named_schedule_sampler
 
 from guided_diffusion import dist_util, logger
 from guided_diffusion.script_util import (
@@ -26,6 +27,8 @@ def main():
 
     dist_util.setup_dist()
     logger.configure()
+
+    schedule_sampler = create_named_schedule_sampler(args.schedule_sampler, diffusion)
 
     logger.log("creating data loader...")
     data = load_data(
@@ -68,7 +71,8 @@ def main():
         )
 
         noise = th.randn_like(images)
-        x_t = diffusion.q_sample(images, args.from_noise_step, noise=noise)
+        t, weights = schedule_sampler.sample(noise.shape[0], dist_util.dev())
+        x_t = diffusion.q_sample(images, t, noise=noise)
 
         sample = sample_fn(
             model,
