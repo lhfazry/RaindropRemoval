@@ -97,7 +97,7 @@ def main():
             all_labels.extend([labels.cpu().numpy() for labels in gathered_labels])
         logger.log(f"created {len(all_images) * args.batch_size} samples")
 
-        if len(all_images) * args.batch_size < args.num_samples:
+        if len(all_images) * args.batch_size >= args.num_samples:
             break
 
     arr = np.concatenate(all_images, axis=0)
