@@ -48,7 +48,8 @@ def main():
         batch_size=args.batch_size,
         image_size=args.image_size,
         class_cond=args.class_cond,
-        random_flip=False
+        random_flip=False,
+        deterministic=True
     )
 
     logger.log("sampling...")
