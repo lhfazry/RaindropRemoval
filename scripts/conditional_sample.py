@@ -77,7 +77,7 @@ def main():
         images = images.to(dist_util.dev())
         noise = th.randn_like(images)
         #t, _ = schedule_sampler.sample(noise.shape[0], dist_util.dev())
-        t = args.from_noise_step * th.ones(noise.shape[0]).long().to(dist_util.dev())
+        t = (args.from_noise_step * th.ones(noise.shape[0]).long()).to(dist_util.dev())
         x_t = diffusion.q_sample(images, t, noise=noise)
 
         sample = sample_fn(
