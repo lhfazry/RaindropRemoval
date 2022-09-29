@@ -126,6 +126,7 @@ def create_argparser():
         batch_size=16,
         use_ddim=False,
         model_path="",
+        schedule_sampler="uniform",
     )
     defaults.update(model_and_diffusion_defaults())
     parser = argparse.ArgumentParser()
