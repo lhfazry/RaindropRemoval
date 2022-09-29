@@ -9,6 +9,7 @@ import os
 import numpy as np
 import torch as th
 import torch.distributed as dist
+import guided_diffusion.script_util
 from guided_diffusion.image_datasets import load_data
 from guided_diffusion.resample import create_named_schedule_sampler
 
@@ -101,6 +102,8 @@ def main():
 
         if len(all_images) * args.batch_size >= args.num_samples:
             break
+
+    np.savez(os.path.join(logger.get_dir(), f"noise.npz"), images)
 
     arr = np.concatenate(all_images, axis=0)
     arr = arr[: args.num_samples]

@@ -3,6 +3,7 @@ import inspect
 import random
 import torch
 
+
 from . import gaussian_diffusion as gd
 from .respace import SpacedDiffusion, space_timesteps
 from .unet import SuperResModel, UNetModel, EncoderUNetModel
@@ -499,3 +500,9 @@ def generate_simplex_noise(
                         ).to(x.device), 0
                 ).repeat(x.shape[0], 1, 1, 1)
     return noise
+
+def tensors_to_images(tensor):
+    images = ((tensor + 1) * 127.5).clamp(0, 255).to(torch.uint8)
+    images = images.permute(0, 2, 3, 1)
+    images = images.contiguous()
+    return images
