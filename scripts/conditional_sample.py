@@ -107,8 +107,8 @@ def main():
 
         if len(all_images) * args.batch_size >= args.num_samples:
             break
-
-    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(all_noises).cpu().numpy())
+    
+    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(np.concatenate(all_noises, axis=0)).cpu().numpy())
 
     arr = np.concatenate(all_images, axis=0)
     arr = arr[: args.num_samples]
