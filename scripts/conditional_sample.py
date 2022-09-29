@@ -95,7 +95,7 @@ def main():
         gathered_samples = [th.zeros_like(sample) for _ in range(dist.get_world_size())]
         dist.all_gather(gathered_samples, sample)  # gather not supported with NCCL
         all_images.extend([sample.cpu().numpy() for sample in gathered_samples])
-        all_noises.extend([item.cpu().numpy() for item in x_t])
+        all_noises.extend([item for item in x_t])
 
         if args.class_cond:
             gathered_labels = [
@@ -108,7 +108,7 @@ def main():
         if len(all_images) * args.batch_size >= args.num_samples:
             break
 
-    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(all_noises))
+    np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(all_noises).cpu().numpy())
 
     arr = np.concatenate(all_images, axis=0)
     arr = arr[: args.num_samples]
