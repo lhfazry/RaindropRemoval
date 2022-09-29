@@ -503,7 +503,7 @@ def generate_simplex_noise(
     return noise
 
 def tensors_to_images(tensor):
-    images = ((tensor + 1) * 127.5).clip(0, 255).to(np.uint8)
+    images = ((tensor + 1) * 127.5).clip(0, 255).astype(np.uint8)
     images = images.permute(0, 2, 3, 1)
     images = images.contiguous()
     return images
