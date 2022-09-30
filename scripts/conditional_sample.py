@@ -61,7 +61,7 @@ def main():
 
     all_images = []
     all_labels = []
-    all_originals = []
+    all_origins = []
     all_noises = []
     #while len(all_images) * args.batch_size < args.num_samples:
     for step, (images, cond) in enumerate(data):
@@ -98,7 +98,7 @@ def main():
         dist.all_gather(gathered_samples, sample)  # gather not supported with NCCL
         all_images.extend([sample.cpu().numpy() for sample in gathered_samples])
         all_noises.extend([item for item in x_t])
-        all_originals.extend([item for item in images])
+        all_origins.extend([item for item in images])
 
         if args.class_cond:
             gathered_labels = [
@@ -113,7 +113,7 @@ def main():
     
     #np.savez(os.path.join(logger.get_dir(), f"noises.npz"), np.concatenate(all_noises, axis=0))
     np.savez(os.path.join(logger.get_dir(), f"noises.npz"), script_util.tensors_to_images(th.stack(all_noises)).cpu().numpy())
-    np.savez(os.path.join(logger.get_dir(), f"originals.npz"), script_util.tensors_to_images(th.stack(all_originals)).cpu().numpy())
+    np.savez(os.path.join(logger.get_dir(), f"origins.npz"), script_util.tensors_to_images(th.stack(all_origins)).cpu().numpy())
 
     arr = np.concatenate(all_images, axis=0)
     arr = arr[: args.num_samples]
