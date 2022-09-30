@@ -449,6 +449,7 @@ class GaussianDiffusion:
         model_kwargs=None,
         device=None,
         progress=False,
+        from_noise_step=None
     ):
         """
         Generate samples from the model.
@@ -480,6 +481,7 @@ class GaussianDiffusion:
             model_kwargs=model_kwargs,
             device=device,
             progress=progress,
+            from_noise_step=from_noise_step
         ):
             final = sample
         return final["sample"]
@@ -495,6 +497,7 @@ class GaussianDiffusion:
         model_kwargs=None,
         device=None,
         progress=False,
+        from_noise_step=None
     ):
         """
         Generate samples from the model and yield intermediate samples from
@@ -511,7 +514,10 @@ class GaussianDiffusion:
             img = noise
         else:
             img = th.randn(*shape, device=device)
-        indices = list(range(self.num_timesteps))[::-1]
+        
+        max_step = from_noise_step if from_noise_step is not None else self.num_timesteps 
+
+        indices = list(range(max_step))[::-1]
 
         if progress:
             # Lazy import so that we don't depend on tqdm.
