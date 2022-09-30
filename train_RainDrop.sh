@@ -8,15 +8,13 @@ CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --attention_resolutions 32,16,8 \
     --class_cond False \
     --diffusion_steps 1000 \
-    --dropout 0.1 \
-    --image_size 64 \
+    --image_size 128 \
     --learn_sigma True \
-    --noise_schedule cosine \
-    --num_channels 192 \
-    --num_head_channels 64 \
-    --num_res_blocks 3 \
+    --noise_schedule linear \
+    --num_channels 256 \
+    --num_heads 4 \
+    --num_res_blocks 2 \
     --resblock_updown True \
-    --use_new_attention_order True \
     --use_fp16 True \
     --use_scale_shift_norm True \
     --batch_size $BATCH_SIZE \
