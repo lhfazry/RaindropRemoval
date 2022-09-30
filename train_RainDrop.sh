@@ -4,7 +4,7 @@ export OPENAI_LOGDIR=logs/RainDrop
 echo "CUDA_ID: " $CUDA_ID
 echo "BATCH_SIZE: " $BATCH_SIZE
 
-CUDA_VISIBLE_DEVICES=7 python scripts/image_train.py \
+CUDA_VISIBLE_DEVICES=$CUDA_ID python scripts/image_train.py \
     --attention_resolutions 32,16,8 \
     --class_cond False \
     --diffusion_steps 1000 \
